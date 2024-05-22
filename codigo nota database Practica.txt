@@ -1,0 +1,170 @@
+create database Practica
+go
+use Practica
+
+create table Productos 
+(
+Id int identity primary key NOT NULL,
+Nombre nvarchar (100),
+Descripcion nvarchar (100),
+Marca nvarchar (100),
+Precio float,
+Stock int
+)
+
+insert into Productos 
+values
+('Gaseosa','3 litros','marcacola',7.5,24),
+('Chocolate','Tableta 100 gramos','iberica',12.5,36)
+
+---PROCEDIMIENTOS ALMACENADOS 
+--------------------------MOSTRAR 
+create proc MostrarProductos
+as
+select *from Productos
+go
+
+--------------------------INSERTAR 
+create proc InsetarProductos
+@nombre nvarchar (100),
+@descrip nvarchar (100),
+@marca nvarchar (100),
+@precio float,
+@stock int
+as
+insert into Productos values (@nombre,@descrip,@marca,@precio,@stock)
+go
+
+------------------------ELIMINAR
+create proc EliminarProducto
+@idpro int
+as
+delete from Productos where Id=@idpro
+go
+------------------EDITAR
+
+create proc EditarProductos
+@nombre nvarchar (100),
+@descrip nvarchar (100),
+@marca nvarchar (100),
+@precio float,
+@stock int,
+@id int
+as
+update Productos set Nombre=@nombre, Descripcion=@descrip, Marca=@marca, Precio=@precio, Stock=@stock where Id=@id
+go
+
+
+-- Crear el procedimiento almacenado
+CREATE PROCEDURE buscarProductos
+    @nombre nvarchar(100),
+    
+   
+@descrip nvarchar(100),
+    @marca nvarchar(100),
+    @precio float,
+    
+   
+@stock int
+AS
+
+----Tabla para el usuario
+create table Users(
+UserID int identity(1,1) primary key,
+LoginName nvarchar (100) unique not null,
+Password nvarchar (100) not null,
+FirstName nvarchar(100) not null,
+LastName nvarchar(100) not null,
+Position nvarchar (100) not null,
+Email nvarchar(150)not null
+) 
+-- Insertar valores en la tabla Users
+INSERT INTO Users (LoginName, Password, FirstName, LastName, Position, Email)
+VALUES ('admin', 'admin', 'Algenis', 'Lopez', 'Administrator', 'Algenis.lopez11320@gmail.com');
+
+INSERT INTO Users (LoginName, Password, FirstName, LastName, Position, Email)
+VALUES ('General', '13012002', 'Leonardo', 'De los Santos', 'General', 'LeonardodlsSantos.com');
+
+insert into Users values ('admin','admin','Algenis','Lopez','Administrator','Algenis.lopez11320@gmail.com')
+insert into Users values ('General','13012002','Leonardo','De los Santos','General','LeonardodlsSantos.com')                                                         
+
+             -- Consulta para verificar las credenciales de inicio de sesión
+DECLARE @user NVARCHAR(100) = 'admin'; 
+DECLARE @pass NVARCHAR(100) = 'admin'; 
+
+SELECT * FROM Users WHERE LoginName = @user AND Password = @pass;
+
+                                        
+select *from Users 
+
+
+-- Tabla Compras
+CREATE TABLE Compras
+(
+    IdCompra int identity primary key NOT NULL,
+    IdProducto int,
+    Cantidad int,
+    FechaCompra datetime,
+    FOREIGN KEY (IdProducto) REFERENCES Productos(Id)
+);
+
+-- Tabla Ventas
+CREATE  TABLE Ventas
+(
+    IdVenta int identity primary key NOT NULL,
+    IdProducto int,
+    Cantidad int,
+    FOREIGN KEY (IdProducto) REFERENCES Productos(Id)
+);
+
+
+
+-- Trigger para actualizar el stock después de una Compra
+CREATE TRIGGER TR_ACTUALIZAR_STOCK_COMPRA
+ON  
+AFTER INSERT
+AS
+BEGIN
+    UPDATE Productos
+    SET Stock = Stock + i.Cantidad
+    FROM Productos p
+    INNER JOIN inserted i ON p.Id = i.IdProducto
+END;
+
+-- Trigger para actualizar el stock después de una Venta
+CREATE TRIGGER TR_ACTUALIZAR_STOCK_VENTA
+ON Ventas
+AFTER INSERT
+AS
+BEGIN
+    UPDATE Productos
+    SET Stock = Stock - i.Cantidad
+    FROM Productos p
+    INNER JOIN inserted i ON p.Id= i.IdProducto
+END;
+
+
+CREATE TRIGGER realiza_ventas
+ON Ventas FOR INSERT AS
+BEGIN
+    DECLARE @producto AS INT
+    DECLARE @Cantidad AS INT
+
+    SELECT @producto = IdProducto, @Cantidad = Cantidad FROM INSERTED;
+
+    UPDATE Productos
+    SET Stock = Stock - @Cantidad
+    WHERE Id = @producto;
+END
+
+
+
+Select * from Productos
+
+INSERT INTO Ventas (IdProducto, Cantidad)
+VALUES (6, 40);
+
+
+
+ALTER TABLE Ventas
+DROP COLUMN Nombre;
