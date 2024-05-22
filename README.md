@@ -1,0 +1,1 @@
+Es una aplicación basada en la arquitectura de capas (multicapa) utilizando C# y ADO.NET para manejar la interacción con una base de datos SQL Server. Este enfoque segmenta la aplicación en diferentes capas, lo cual mejora la organización, mantenimiento y escalabilidad del código. A continuación
