@@ -1,6 +1,6 @@
 # Descripción del Proyecto
 
-Es una aplicación basada en la arquitectura de capas (multicapa) utilizando C# y ADO.NET para manejar la interacción con una base de datos SQL Server. En pocas palabras, es un CRUD y tiene una capa de seguridad. Este enfoque segmenta la aplicación en diferentes capas, lo cual mejora la organización, mantenimiento y escalabilidad del código. También tiene los roles que son admin y agente en donde el administrador tiene acceso a todas las funciones. A continuación, estará viendo imágenes sobre el proyecto.
+Es una aplicación basada en laarquitectura multicapa utilizando C# y ADO.NET para manejar la interacción con una base de datos SQL Server. En pocas palabras, es un CRUD y tiene una capa de seguridad. Este enfoque segmenta la aplicación en diferentes capas, lo cual mejora la organización, mantenimiento y escalabilidad del código. También tiene los roles que son admin y agente en donde el administrador tiene acceso a todas las funciones. A continuación, estará viendo imágenes sobre el proyecto.
 
 ## Login
 
