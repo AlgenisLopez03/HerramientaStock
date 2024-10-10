@@ -10,8 +10,4 @@ Es una aplicación basada en laarquitectura multicapa utilizando C# y .NET Core 
 
 ![Menú](https://github.com/AlgenisLopez03/HerramientaStock/assets/141606823/d7e7d887-dce3-405a-a297-56baf90052c4)
 
-## Registro de venta
-![image](https://github.com/AlgenisLopez03/HerramientaStock/assets/141606823/cc5e9866-1b16-4943-afa9-89e5a732c417)
 
-## Venta de productos:
-![image](https://github.com/AlgenisLopez03/HerramientaStock/assets/141606823/cb7a3024-9d08-4215-b6f4-2e5039e8b6cb)
